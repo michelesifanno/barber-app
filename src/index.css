@@ -1,0 +1,38 @@
+.MuiPopover-paper {
+    padding: 20px !important;
+  }
+
+.BoxStyle {
+  background-color: rgb(255, 255, 255);
+  color: rgba(47, 43, 61, 0.78);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 6px;
+  box-shadow: rgba(47, 43, 61, 0.1) 0px 4px 18px 0px;
+}
+.MuiDataGrid-columnHeaderTitle {
+  font-weight: bold!important;
+}
+
+.activeNavItem  {
+  background-color: #3788d8!important;
+  color: white!important;
+  border-radius:10px!important;
+}
+.activeNavItem .MuiListItemIcon-root {
+  color: white!important;
+}
+.MuiButtonBase-root:hover, .MuiListItemButton-root:hover {
+  border-radius: 10px !important;
+  background-color: #3788d829;
+}
+.MuiButtonBase-root, .MuiListItemButton-root {
+  border-radius: 10px !important;
+}
+
+.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular {
+  display: none;
+}
+
+.MuiButton-contained {
+  box-shadow: none!important;
+}
