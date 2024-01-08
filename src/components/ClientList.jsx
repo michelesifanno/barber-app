@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   IconButton,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import getClienti from "../utils/getClienti";
+import deleteClient from "../utils/deleteClienti";
 import { DataGrid } from '@mui/x-data-grid';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 function ClientList() {
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   const {
     data: responseData,
     error: clientiError,
     loading: clientiLoading,
   } = getClienti();
-
-  const [clienti, setClienti] = useState([]);
 
   useEffect(() => {
     if (responseData?.data) {
@@ -23,39 +27,32 @@ function ClientList() {
     }
   }, [responseData]);
 
-  
+
+  const [clienti, setClienti] = useState([]);
+
+
+  const handleEdit = async (clientId) => {
+    console.log(`Modifica del cliente con ID: ${clientId}`);
+  };
+
+
   const handleDelete = async (clientId) => {
+    console.log(`Cancellazione del cliente con ID: ${clientId}`);
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/clienti/${clientId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (!response.ok) {
-        const error = await response.json();
-        console.error(error);
-        alert(error.errorMessage || 'Errore durante la richiesta API');
-        return;
-      }
-  
-      console.log('Cliente rimosso con successo!');
-      // Aggiorna la lista dei clienti dopo la rimozione
-      const updatedClientiResponse = await getClienti();
-      if (updatedClientiResponse?.data) {
-        setClienti(updatedClientiResponse.data);
-      }
+      await deleteClient(clientId);
+
+      setSnackbarOpen(true);
+      // Esegui il refetch della lista dei clienti per ottenere la versione aggiornata
+
+
     } catch (error) {
       console.error(error);
       alert('Errore durante la richiesta API');
     }
   };
-      
 
-  const handleEdit = (clientId) => {
-    // Implementa la logica per la modifica del cliente
-    console.log(`Modifica del cliente con ID: ${clientId}`);
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   const rows = clienti.map((cliente) => ({
@@ -77,13 +74,22 @@ function ClientList() {
       field: 'azione', headerName: 'Azioni', flex: 0.2, renderCell: (params) => (
         <div>
           <IconButton onClick={() => handleEdit(params.row.id)}>
-            <WhatsAppIcon />
+            <VisibilityTwoToneIcon />
           </IconButton>
-          <IconButton onClick={() => handleEdit(params.row.id)}>
-            <EditTwoToneIcon />
+
+          <IconButton>
+            <a
+              href={`https://wa.me/${params.row.telefono}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{color:"rgba(0, 0, 0, 0.54)"}}
+            >
+              <WhatsAppIcon />
+            </a>
           </IconButton>
+
           <IconButton onClick={() => handleDelete(params.row.id)}>
-            <DeleteTwoToneIcon />
+            <DeleteTwoToneIcon sx={{color:"rgba(0, 0, 0, 0.54)"}}/>
           </IconButton>
         </div>
       ),
@@ -104,6 +110,17 @@ function ClientList() {
       ) : (
         <p>Lista clienti non disponibile o vuota.</p>
       )}
+
+      <Snackbar
+        open={snackbarOpen}
+        anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success">
+        Cliente eliminato con successo! Aggiorna la pagina per vedere la lista aggiornata!
+        </Alert>
+      </Snackbar>
+
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import TextField from '@mui/material/TextField';
@@ -13,9 +15,9 @@ import { useTheme } from '@mui/material/styles';
 import postServizi from '../utils/postServizi';
 import { Typography, InputAdornment } from '@mui/material';
 
-const AddService = ({ onAddSuccess }) => {
+const AddService = () => {
   const { response, error, loading, postData } = postServizi();
-
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [formData, setFormData] = useState({
     nome: '',
     cognome: '',
@@ -34,7 +36,7 @@ const AddService = ({ onAddSuccess }) => {
         prezzo: '',
         durata: '',
       });
-      onAddSuccess();
+      setSnackbarOpen(true);
     } catch (error) {
       console.error('Errore durante la richiesta API', error);
     }
@@ -52,7 +54,12 @@ const AddService = ({ onAddSuccess }) => {
   const closeSidebar = () => setSidebarOpen(false);
 
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));;
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
 
   return (
     <div>
@@ -132,6 +139,19 @@ const AddService = ({ onAddSuccess }) => {
               {loading ? 'Inviando...' : 'Aggiungi servizio'}
             </Button>
           </form>
+
+          <Snackbar
+            open={snackbarOpen}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            autoHideDuration={6000}
+            onClose={handleCloseSnackbar}
+          >
+            <Alert onClose={handleCloseSnackbar} severity="success">
+              Servizio aggiunto con successo! Aggiorna la pagina per vedere la lista aggiornata!
+            </Alert>
+          </Snackbar>
+
+
         </Box>
       </SwipeableDrawer>
     </div>

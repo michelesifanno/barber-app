@@ -1,8 +1,7 @@
-
-const deleteClient = async (clientId) => {
+const deleteService = async (serviceId) => {
   
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/clienti/${clientId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/servizi/${serviceId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -15,7 +14,7 @@ const deleteClient = async (clientId) => {
         throw new Error(error.errorMessage || 'Errore durante la richiesta API');
       }
 
-        console.log('Cliente rimosso con successo!');
+        console.log('Servizio rimosso con successo!');
 
     } catch (error) {
       console.error(error);
@@ -23,5 +22,5 @@ const deleteClient = async (clientId) => {
     }
   };
   
-  export default deleteClient;
+  export default deleteService;
   
