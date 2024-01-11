@@ -6,6 +6,7 @@ import Servizi from "../pages/Servizi";
 import Calendario from "../pages/Calendario";
 import Appuntamenti from "../pages/Appuntamenti";
 import Report from "../pages/Report";
+import GoogleCal from "../pages/GoogleCal";
 
 
 export const router = createBrowserRouter([
@@ -15,7 +16,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Calendario />
+                element: <GoogleCal />
             },
             {
                 path: "appuntamenti",
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
                 path: "report",
                 element: <Report />,
             },
+
         ],
     },
     {

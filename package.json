@@ -21,12 +21,16 @@
     "@mui/material": "^5.14.19",
     "@mui/x-data-grid": "^6.18.2",
     "@mui/x-date-pickers": "^6.18.3",
+    "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
+    "gapi-script": "^1.2.0",
     "react": "^18.2.0",
     "react-datetime": "^3.2.0",
     "react-dom": "^18.2.0",
+    "react-google-calendar-api": "^2.3.0",
     "react-router-dom": "^6.20.1",
-    "recharts": "^2.10.3"
+    "recharts": "^2.10.3",
+    "vite-plugin-env": "^1.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
