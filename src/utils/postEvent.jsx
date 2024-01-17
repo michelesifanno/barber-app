@@ -9,6 +9,7 @@ function postEvent() {
     try {
       setLoading(true);
       setError(null);
+
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}/prenotazioni`, {
         method: 'POST',
         headers: {
@@ -19,13 +20,13 @@ function postEvent() {
 
       const result = await response.json();
 
-      if (response.ok) {
-        setResponse(result);
-      } else {
-        setError(result.errorMessage || 'Errore durante la richiesta API');
+      if (!response.ok) {
+        throw new Error(result.errorMessage || 'Errore durante la richiesta API');
       }
+
+      setResponse(result);
     } catch (error) {
-      setError('Errore durante la richiesta API');
+      setError(error.message || 'Errore durante la richiesta API');
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function useGetServizi() {
+function GetServizi() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -42,5 +42,5 @@ function useGetServizi() {
   };
 }
 
-export default useGetServizi;
+export default GetServizi;
 

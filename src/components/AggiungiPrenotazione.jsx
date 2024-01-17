@@ -20,77 +20,98 @@ import {
 import postEvent from '../utils/postEvent';
 import getClienti from '../utils/getClienti';
 import getServizi from '../utils/getServizi';
+import { gapi } from 'gapi-script';
 
 const AggiungiPrenotazione = () => {
   const { response, error, loading, postData } = postEvent();
 
   const [formData, setFormData] = useState({
-    id: '',
     start: '',
-    end: '',
-    nome: '',
-    cognome: '',
-    servizio: '',
+    idCliente: '',
+    idServizio: '',
   });
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
-      // Modifica la struttura del payload in base alle specifiche della tua API
+      console.log('Payload before submission:', formData);
+
       const payload = {
-        start: formData.start,
-        end: formData.end,
-        title: formData.nome, // Utilizza solo il nome del cliente
+        start: new Date(formData.start).toISOString(),
+        end: new Date(calculateEndDate()).toISOString(),
+        title: `${formData.idServizio}`, // Cambiato da "idCliente" a "idServizio"
         extendedProps: {
-          servizi: formData.servizio, // Inserisci il valore corretto per "servizi" in base alle tue esigenze
+          servizi: [formData.idServizio],
         },
       };
-        
-      // Invia la richiesta POST con il nuovo payload
+
       const response = await postData(payload);
-  
-      // Controlla la risposta dalla API e gestisci di conseguenza
+
       if (response?.data) {
-        // La chiamata è andata a buon fine, puoi gestire la risposta qui se necessario
         console.log('Risposta dalla API:', response.data);
+
+        // Ora aggiungi l'evento al calendario di Google
+        const googleEvent = {
+          summary: `${formData.idServizio}`, // Titolo dell'evento
+          description: `${formData.idCliente}`, // Descrizione dell'evento
+          start: {
+            dateTime: new Date(formData.start).toISOString(),
+            timeZone: 'UTC',
+          },
+          end: {
+            dateTime: new Date(calculateEndDate()).toISOString(),
+            timeZone: 'UTC',
+          },
+        };
+
+        const calendarId = `${import.meta.env.VITE_GC_CALENDAR_ID}`;
+
+        // Aggiungi l'evento al calendario di Google
+        await gapi.client.calendar.events.insert({
+          calendarId: calendarId,
+          resource: googleEvent,
+        });
+
+        console.log('Evento aggiunto al calendario di Google.');
       }
-  
-      // Resetta il form
+
       setFormData({
-        id: '',
         start: '',
-        end: '',
-        nome: '',
-        cognome: '',
-        servizio: '',
+        idCliente: '',
+        idServizio: '',
       });
+
+      closeSidebar();
     } catch (error) {
-      // Gestisci gli errori qui
       console.error('Errore durante la richiesta API', error);
     }
   };
 
-  
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === 'nome') {
-      const selectedCliente = clienti.find((cliente) => cliente.nome === value);
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        id: selectedCliente.id,
-        nome: selectedCliente.nome,
-        cognome: selectedCliente.cognome,
-      }));
-    } else {
-      // Altrimenti, aggiorna solo il campo corrente
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const calculateEndDate = () => {
+    const { start, idServizio } = formData;
+
+    if (!start || !idServizio) {
+      return '';
     }
+
+    const startDate = new Date(start);
+    const serviceDuration =
+      servizi.find((s) => s.id === idServizio)?.durata || 0;
+    const endDate = new Date(startDate.getTime() + serviceDuration * 60000);
+
+    return endDate.toISOString();
   };
 
   const openSidebar = () => setSidebarOpen(true);
@@ -117,7 +138,7 @@ const AggiungiPrenotazione = () => {
     data: responseServiceData,
     error: serviziError,
     loading: serviziLoading,
-  } = getServizi('http://localhost:5002/api/servizi?size=999999999');
+  } = getServizi();
 
   const [servizi, setServizi] = useState([]);
 
@@ -166,27 +187,21 @@ const AggiungiPrenotazione = () => {
               required
               label="Data di inizio"
               name="start"
+              type="datetime-local"
               value={formData.start}
-              onChange={(event) => {
-                handleChange(event);
-                // Aggiorna anche il campo "end" con lo stesso valore di "start"
-                setFormData((prevFormData) => ({
-                  ...prevFormData,
-                  end: event.target.value,
-                }));
-              }}
+              onChange={handleChange}
             />
             <FormControl fullWidth variant="outlined" margin="normal" required>
               <InputLabel>Cliente</InputLabel>
               <Select
-                value={formData.nome}
+                value={formData.idCliente}
                 onChange={handleChange}
                 label="Cliente"
-                name="nome"
+                name="idCliente"
               >
                 {clienti &&
                   clienti.map((cliente) => (
-                    <MenuItem key={cliente.id} value={cliente.nome}>
+                    <MenuItem key={cliente.id} value={cliente.id}>
                       {cliente.nome} {cliente.cognome}
                     </MenuItem>
                   ))}
@@ -196,20 +211,19 @@ const AggiungiPrenotazione = () => {
             <FormControl fullWidth variant="outlined" margin="normal" required>
               <InputLabel>Servizio</InputLabel>
               <Select
-                value={formData.servizio}
+                value={formData.idServizio}
                 onChange={handleChange}
                 label="Servizio"
-                name="servizio"
+                name="idServizio"
               >
                 {servizi &&
                   servizi.map((servizio) => (
-                    <MenuItem key={servizio.id} value={servizio.nome}>
+                    <MenuItem key={servizio.id} value={servizio.id}>
                       {servizio.nome}
                     </MenuItem>
                   ))}
               </Select>
             </FormControl>
-            {console.log(formData.start, formData.id, formData.nome, formData.cognome, formData.end, formData.servizio)}
             <Button
               type="submit"
               size="large"

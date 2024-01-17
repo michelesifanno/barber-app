@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AggiungiPrenotazione from '../components/AggiungiPrenotazione';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { gapi } from 'gapi-script';
@@ -66,6 +67,7 @@ const GoogleCal = () => {
 
   return (
     <Box sx={{ py: [2], minHeight: '100vh' }}>
+      <AggiungiPrenotazione />
     <Typography variant="h4" gutterBottom>
         Calendario di Google
       </Typography>
