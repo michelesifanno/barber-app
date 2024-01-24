@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function getServizi() {
+function getServizio(id) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -11,7 +11,7 @@ function getServizi() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/servizi`, {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/servizi/${id}`, {
           method: 'GET',
           headers: {
             'accept': 'application/json',
@@ -42,4 +42,4 @@ function getServizi() {
   };
 }
 
-export default getServizi;
+export default getServizio;

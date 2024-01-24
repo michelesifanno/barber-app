@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
-  Box,
   IconButton,
-  Grid,
-  Typography,
   Snackbar,
   Alert
 } from "@mui/material";
-import getServizi from "../utils/getServizi";
-import deleteService from "../utils/deleteService";
+import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-
+import getServizi from "../utils/getServizi";
 
 
 function ServiceList() {
@@ -69,8 +65,10 @@ function ServiceList() {
     {
       field: 'azione', headerName: 'Azioni', flex: 0.1, renderCell: (params) => (
         <div>
-          <IconButton onClick={() => handleEdit(params.row.id)}>
+          <IconButton>
+          <Link to={`/servizio/${params.row.id}`} className="AzioneIcon">
             <VisibilityTwoToneIcon />
+            </Link>
           </IconButton>
 
           <IconButton onClick={() => handleDelete(params.row.id)}>

@@ -3,7 +3,8 @@ import Root from '../pages/Root'
 import NotFoundRoute from "../pages/NotFoundRoute";
 import Clienti from "../pages/Clienti";
 import Servizi from "../pages/Servizi";
-import Calendario from "../pages/Calendario";
+import Cliente from "../pages/Cliente";
+import Servizio from "../pages/Servizio";
 import Appuntamenti from "../pages/Appuntamenti";
 import Report from "../pages/Report";
 import GoogleCal from "../pages/GoogleCal";
@@ -27,8 +28,16 @@ export const router = createBrowserRouter([
                 element: <Clienti />,
             },
             {
+                path: "cliente/:id",
+                element: <Cliente />,
+            },
+            {
                 path: "servizi",
                 element: <Servizi />,
+            },
+            {
+                path: "servizio/:id",
+                element: <Servizio />,
             },
             {
                 path: "report",

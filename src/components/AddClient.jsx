@@ -36,6 +36,7 @@ export function AddClient() {
         telefono: '',
       });
       setSnackbarOpen(true);
+      
     } catch (error) {
       console.error('Errore durante la richiesta API', error);
     }

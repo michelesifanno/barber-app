@@ -5,6 +5,7 @@ import {
   Alert
 } from "@mui/material";
 import getClienti from "../utils/getClienti";
+import { Link } from "react-router-dom";
 import deleteClient from "../utils/deleteClienti";
 import { DataGrid } from '@mui/x-data-grid';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
@@ -73,8 +74,10 @@ function ClientList() {
     {
       field: 'azione', headerName: 'Azioni', flex: 0.2, renderCell: (params) => (
         <div>
-          <IconButton onClick={() => handleEdit(params.row.id)}>
-            <VisibilityTwoToneIcon />
+          <IconButton>
+            <Link to={`/cliente/${params.row.id}`} className="AzioneIcon">
+              <VisibilityTwoToneIcon />
+            </Link>
           </IconButton>
 
           <IconButton>

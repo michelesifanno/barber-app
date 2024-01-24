@@ -1,17 +1,19 @@
 import { useState } from 'react';
 
-function putCliente(clienteId, data) {
+function usePutCliente() {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const putData = async () => {
+  const putCliente = async (clienteId, data) => {
     try {
       setLoading(true);
       setError(null);
+
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}/clienti/${clienteId}`, {
         method: 'PUT',
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
@@ -19,13 +21,13 @@ function putCliente(clienteId, data) {
 
       const result = await response.json();
 
-      if (response.ok) {
-        setResponse(result);
-      } else {
-        setError(result.errorMessage || 'Errore durante la richiesta API');
+      if (!response.ok) {
+        throw new Error(result.errorMessage || 'Errore durante la richiesta API');
       }
+
+      setResponse(result.data);
     } catch (error) {
-      setError('Errore durante la richiesta API');
+      setError(error.message || 'Errore durante la richiesta API');
     } finally {
       setLoading(false);
     }
@@ -35,9 +37,8 @@ function putCliente(clienteId, data) {
     response,
     error,
     loading,
-    putData,
+    putCliente,
   };
 }
 
-
-export default putCliente;
+export default usePutCliente;
