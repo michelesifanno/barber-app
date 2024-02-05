@@ -5,19 +5,27 @@ import {
 } from "@mui/material";
 import AddClient from "../components/AddClient";
 import ClientList from "../components/ClientList"
+import { createTheme } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
 
 
+const defaultTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
 
 function Clienti() {
 
 
   return (
     <>
+    <ThemeProvider theme={defaultTheme}>
       <Box>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={9}>
-            <Typography variant="h4" gutterBottom mx={[0]} my={[0]}>
-              Clienti
+            <Typography variant="h4" gutterBottom mx={[0]} my={[0]} sx={{color:'#222'}}>
+              Clienti 
             </Typography>
           </Grid>
           <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -31,6 +39,7 @@ function Clienti() {
             </p>
             <ClientList />
       </Box>
+    </ThemeProvider>
     </>
   );
 }

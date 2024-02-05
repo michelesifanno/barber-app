@@ -49,7 +49,7 @@ line-height: 0px !important;
 .MuiListItemButton-root {
   margin: 10px 0px!important;
 }
-.MuiPaper-root
-{
-  border: none;
+
+.MuiDrawer-paper {
+  border: none!important;
 }
