@@ -3,7 +3,6 @@ import { NavLink, useLocation } from 'react-router-dom';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import SpaceDashboardTwoToneIcon from '@mui/icons-material/SpaceDashboardTwoTone';
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
@@ -31,7 +30,7 @@ function MainListItems() {
         selected={isActive('/')}
         className={isActive('/') ? 'activeNavItem' : ''}>
         <ListItemIcon>
-          <SpaceDashboardTwoToneIcon />
+          <SpaceDashboardTwoToneIcon className='iconDashboard'/>
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItemButton>
@@ -42,7 +41,7 @@ function MainListItems() {
         className={isActive('/appuntamenti') ? 'activeNavItem' : ''}
       >
         <ListItemIcon>
-          <CalendarTodayTwoToneIcon />
+          <CalendarTodayTwoToneIcon className='iconDashboard'/>
         </ListItemIcon>
         <ListItemText primary="Appuntamenti" />
       </ListItemButton>
@@ -52,7 +51,7 @@ function MainListItems() {
         selected={isActive('/clienti')}
         className={isActive('/clienti') ? 'activeNavItem' : ''}>
         <ListItemIcon>
-          <PeopleAltTwoToneIcon />
+          <PeopleAltTwoToneIcon className='iconDashboard'/>
         </ListItemIcon>
         <ListItemText primary="Clienti" />
       </ListItemButton>
@@ -62,9 +61,9 @@ function MainListItems() {
         selected={isActive('/servizi')}
         className={isActive('/servizi') ? 'activeNavItem' : ''}>
         <ListItemIcon>
-          <ContentCutTwoToneIcon />
+          <ContentCutTwoToneIcon className='iconDashboard'/>
         </ListItemIcon>
-        <ListItemText primary="Servizi" />
+        <ListItemText primary="Servizi" sx={{color:'rgba(255, 255, 255, 0.54'}} />
       </ListItemButton>
       <ListItemButton
         component={NavLink}
@@ -72,7 +71,7 @@ function MainListItems() {
         selected={isActive('/report')}
         className={isActive('/report') ? 'activeNavItem' : ''}>
         <ListItemIcon>
-          <ArticleTwoToneIcon />
+          <ArticleTwoToneIcon className='iconDashboard'/>
         </ListItemIcon>
         <ListItemText primary="Report" />
       </ListItemButton>

@@ -10,16 +10,11 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MainListItems from '../components/listItems';
 import Sidebar from '../components/Sidebar';
 import WestTwoToneIcon from '@mui/icons-material/WestTwoTone';
 import EastTwoToneIcon from '@mui/icons-material/EastTwoTone';
-import ResponsiveAppBar from '../components/ResponsiveAppBar';
 
 
 function Copyright(props) {
@@ -58,6 +53,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     '& .MuiDrawer-paper': {
       position: 'relative',
       whiteSpace: 'nowrap',
+      backgroundColor:'#222',
       width: drawerWidth,
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
@@ -79,9 +75,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const defaultTheme = createTheme();
-
-
 
 function AppLayout() {
   const [open, setOpen] = React.useState(false);
@@ -89,10 +82,16 @@ function AppLayout() {
     setOpen(!open);
   };
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+
   return (
-    <ThemeProvider theme={defaultTheme}>
-              <ResponsiveAppBar />
-      <Box sx={{ display: 'flex' }}>
+    
+    <ThemeProvider theme={darkTheme}>
+      <Box sx={{ display: 'flex', border: '5px solid #222', backgroundColor:'#222' }}>
         <CssBaseline />
         <Drawer variant="permanent" open={open}>
           <Toolbar
@@ -106,11 +105,11 @@ function AppLayout() {
           >
             {open ?
             (<IconButton onClick={toggleDrawer}>
-              <WestTwoToneIcon />
+              <WestTwoToneIcon sx={{color:'#fff'}}/>
             </IconButton>)
             :
             (<IconButton onClick={toggleDrawer}>
-            <EastTwoToneIcon />
+            <EastTwoToneIcon sx={{color:'#fff'}}/>
             </IconButton>)}
           </Toolbar>
           <Divider />
@@ -126,13 +125,12 @@ function AppLayout() {
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+            backgroundColor: '#fff',
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
+            border: '1px solid #222',
+            borderRadius: '20px'
           }}
         >
           <Toolbar />
