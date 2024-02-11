@@ -22,6 +22,8 @@ function MainListItems() {
     setOpen(!open);
   };
 
+
+
   return (
     <>
       <ListItemButton
@@ -75,7 +77,6 @@ function MainListItems() {
         </ListItemIcon>
         <ListItemText primary="Report" />
       </ListItemButton>
-
     </>
   )
 }

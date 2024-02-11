@@ -9,18 +9,12 @@ import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 
 
-const defaultTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
 
 function Clienti() {
 
 
   return (
     <>
-    <ThemeProvider theme={defaultTheme}>
       <Box>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={9}>
@@ -39,7 +33,6 @@ function Clienti() {
             </p>
             <ClientList />
       </Box>
-    </ThemeProvider>
     </>
   );
 }

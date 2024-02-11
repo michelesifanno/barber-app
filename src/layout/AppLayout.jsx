@@ -15,6 +15,8 @@ import MainListItems from '../components/listItems';
 import Sidebar from '../components/Sidebar';
 import WestTwoToneIcon from '@mui/icons-material/WestTwoTone';
 import EastTwoToneIcon from '@mui/icons-material/EastTwoTone';
+import '@fontsource-variable/inter';
+
 
 
 function Copyright(props) {
@@ -53,7 +55,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     '& .MuiDrawer-paper': {
       position: 'relative',
       whiteSpace: 'nowrap',
-      backgroundColor:'#222',
+      backgroundColor:'#482880',
       width: drawerWidth,
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
@@ -84,14 +86,19 @@ function AppLayout() {
 
   const darkTheme = createTheme({
     palette: {
-      mode: 'dark',
+      mode: 'light',
+    },
+    typography: {
+      fontFamily: 'Inter, sans-serif', // Assicurati che 'Inter' sia specificato qui
     },
   });
+
+
 
   return (
     
     <ThemeProvider theme={darkTheme}>
-      <Box sx={{ display: 'flex', border: '5px solid #222', backgroundColor:'#222' }}>
+      <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <Drawer variant="permanent" open={open}>
           <Toolbar
@@ -129,8 +136,6 @@ function AppLayout() {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
-            border: '1px solid #222',
-            borderRadius: '20px'
           }}
         >
           <Toolbar />

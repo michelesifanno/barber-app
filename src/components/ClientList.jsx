@@ -75,7 +75,7 @@ function ClientList() {
       field: 'azione', headerName: 'Azioni', flex: 0.2, renderCell: (params) => (
         <div>
           <IconButton>
-            <Link to={`/cliente/${params.row.id}`} className="AzioneIcon">
+            <Link to={`/clienti/${params.row.id}`} className="AzioneIcon">
               <VisibilityTwoToneIcon />
             </Link>
           </IconButton>

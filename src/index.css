@@ -13,20 +13,22 @@
   font-weight: bold!important;
 }
 
-.activeNavItem  {
-  background-color: #3788d8!important;
+.activeNavItem {
   color: white!important;
-  border-radius:10px!important;
+  border-radius:5px!important;
+  border-left: 5px solid #fff!important;
+  margin-left:-5px!important;
 }
-.activeNavItem .MuiListItemIcon-root {
+
+.activeNavItem .MuiListItemIcon-root .iconDashboard {
   color: white!important;
 }
 .MuiButtonBase-root:hover, .MuiListItemButton-root:hover {
-  border-radius: 10px !important;
+  border-radius: 5px !important;
   background-color: #3788d829;
 }
 .MuiButtonBase-root, .MuiListItemButton-root {
-  border-radius: 10px !important;
+  border-radius: 5px !important;
 }
 
 .MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular {
@@ -47,9 +49,13 @@ line-height: 0px !important;
   color: rgba(255, 255, 255, 0.80)!important;
 }
 .MuiListItemButton-root {
-  margin: 10px 0px!important;
+  margin: 15px 0px 15px 0px!important;
 }
 
 .MuiDrawer-paper {
   border: none!important;
+}
+
+.iconDashboard {
+  color:#ffffffb5!important;
 }

@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
                 element: <Clienti />,
             },
             {
-                path: "cliente/:id",
+                path: "clienti/:id",
                 element: <Cliente />,
             },
             {
